@@ -25,13 +25,16 @@ class UserAPI:
             uid = body.get('uid')
             if uid is None or len(uid) < 2:
                 return {'message': f'User ID is missing, or is less than 2 characters'}, 210
+            
+            email = body.get('email')
             # look for password and dob
             password = body.get('password')
             dob = body.get('dob')
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User(name=name, 
-                      uid=uid)
+            uo = User(email=email, name=name, 
+                      uid=uid
+                      )
             
             ''' Additional garbage error checking '''
             # set password if provided
@@ -58,6 +61,8 @@ class UserAPI:
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
+
+    # class _
 
     # building RESTapi endpoint
     api.add_resource(_Create, '/create')
