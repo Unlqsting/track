@@ -24,21 +24,36 @@ class User(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
+    _email = db.Column(db.String(255), unique=True, nullable=False)
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
+    
 
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     # posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, password="123qwerty", dob=date.today()):
+    def __init__(self, email, name, uid, password="123qwerty", dob=date.today()):
+        self._email = email
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
         self.set_password(password)
         self._dob = dob
-
+    
+    # ####################### email stuff ######################## #
+    
+    @property
+    def email(self):
+        return self._email
+    
+    @email.setter
+    def email(self, email):
+        self._email = email
+    # ####################### email stuff ######################## #
+    
+    
     # a name getter method, extracts name from object
     @property
     def name(self):
@@ -71,6 +86,7 @@ class User(db.Model):
     def set_password(self, password):
         """Create a hashed password."""
         self._password = generate_password_hash(password, method='sha256')
+        
 
     # check password parameter versus stored/encrypted password
     def is_password(self, password):
@@ -115,17 +131,21 @@ class User(db.Model):
     # returns dictionary
     def read(self):
         return {
+            "email": self.email,
             "id": self.id,
             "name": self.name,
             "uid": self.uid,
+            # "password": self.password,
             "dob": self.dob,
             "age": self.age,
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name="", uid="", password=""):
+    def update(self, email="", name="", uid="", password=""):
         """only updates values with length"""
+        if len(email) > 0:
+            self.email = email
         if len(name) > 0:
             self.name = name
         if len(uid) > 0:
@@ -151,13 +171,9 @@ def initUsers():
     """Create database and tables"""
     db.create_all()
     """Tester data for table"""
-    u1 = User(name='Thomas Edison', uid='toby', password='123toby')
-    u2 = User(name='Nicholas Tesla', uid='niko', password='123niko')
-    u3 = User(name='Alexander Graham Bell', uid='lex', password='123lex')
-    u4 = User(name='Eli Whitney', uid='whit', password='123whit')
-    u5 = User(name='John Mortensen', uid='jm1021', dob=date(1959, 10, 21))
-
-    users = [u1, u2, u3, u4, u5]
+    u1 = User(email='abc@xyz.com', name='Thomas Edison', uid='toby', password='123toby')
+    
+    users = [u1]
 
     """Builds sample user/note(s) data"""
     for user in users:
