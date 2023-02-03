@@ -131,10 +131,12 @@ class User(db.Model):
     # returns dictionary
     def read(self):
         return {
+            "email": self.email,
             "id": self.id,
             "email": self.email,
             "name": self.name,
             "uid": self.uid,
+            # "password": self.password,
             "dob": self.dob,
             "age": self.age
         }

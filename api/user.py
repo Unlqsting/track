@@ -27,14 +27,12 @@ class UserAPI:
                 return {'message': f'User ID is missing, or is less than 2 characters'}, 210
             
             email = body.get('email')
-            # if email is None or len(email) < 2:
-            #     return {'message': f'email is missing, or is invalid'}, 210
             # look for password and dob
             password = body.get('password')
             dob = body.get('dob')
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User(name=name, email=email, 
+            uo = User(email=email, name=name, 
                       uid=uid
                       )
             
@@ -63,6 +61,8 @@ class UserAPI:
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
+
+    # class _
 
     # class _
 
