@@ -26,7 +26,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     _email = db.Column(db.String(255), unique=True, nullable=False)
     _name = db.Column(db.String(255), unique=False, nullable=False)
-    _uid = db.Column(db.String(255), unique=True, nullable=False)
+    _uid = db.Column(db.Text(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
     
@@ -131,13 +131,12 @@ class User(db.Model):
     # returns dictionary
     def read(self):
         return {
-            "email": self.email,
             "id": self.id,
+            "email": self.email,
             "name": self.name,
             "uid": self.uid,
-            # "password": self.password,
             "dob": self.dob,
-            "age": self.age,
+            "age": self.age
         }
 
     # CRUD update: updates user name, password, phone

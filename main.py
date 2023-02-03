@@ -36,7 +36,8 @@ def index():
 def stub():
     return render_template("stub.html")
 
-# @app.route('/api/users/create', methods=['GET', 'POST'])
+# @app.route('/googlesign', methods=['GET', 'POST'])
+
 
 @app.before_first_request
 def activate_job():

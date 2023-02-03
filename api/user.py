@@ -27,12 +27,14 @@ class UserAPI:
                 return {'message': f'User ID is missing, or is less than 2 characters'}, 210
             
             email = body.get('email')
+            # if email is None or len(email) < 2:
+            #     return {'message': f'email is missing, or is invalid'}, 210
             # look for password and dob
             password = body.get('password')
             dob = body.get('dob')
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User(email=email, name=name, 
+            uo = User(name=name, email=email, 
                       uid=uid
                       )
             
