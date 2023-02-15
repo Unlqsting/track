@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask import Flask, request, redirect, render_template
+from flask_cors import CORS
 
 """
 These object can be used throughout project.
@@ -12,6 +13,8 @@ These object can be used throughout project.
 
 # Setup of key Flask object (app)
 app = Flask(__name__)
+
+CORS(app)
 # Setup SQLAlchemy object and properties for the database (db)
 dbURI = 'sqlite:///sqlite.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

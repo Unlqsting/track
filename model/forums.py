@@ -49,7 +49,7 @@ class Post(db.Model):
     def read(self):   
         return {
             "id": self.id,
-            "Post title": self.postTitle,
+            "postTitle": self.postTitle,
             "post": self.post
         }
 
